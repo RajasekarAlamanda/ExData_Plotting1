@@ -1,0 +1,24 @@
+
+# Plot 4
+
+library(dplyr)
+library(lubridate)
+data <- read.table("Rajasekar Alamanda/KC/R/Coursera - Data Science/Exploratory Data Analysis/household_power_consumption.txt", sep = ";", na.strings="?", header = TRUE)
+data_2 <- subset(data, Date %in% c("1/2/2007", "2/2/2007"))
+data_2$Date <- as.Date(data_2$Date, "%d%m%Y")
+data_2$Datetime <- (paste(data_2$Date, data_2$Time))
+data_2$Datetime <- as.POSIXct(datetime)
+data_2$Day <- weekdays(as.Date(data_2$Date))
+str(data_2)
+par(mfrow=c(2,2))
+plot(data_2$Global_active_power~data_2$Datetime, type = "l", xlab = "", ylab = "Global Active Power (KiloWatts)" )     
+
+plot(data_2$Voltage~data_2$Datetime, type = "l", xlab = "datetime", ylab = "Voltage" )     
+
+plot(data_2$Sub_metering_1~data_2$Datetime, type = "l", xlab = "", ylab = "Energy Submetering" )    
+lines(data_2$Sub_metering_2~data_2$Datetime, col = "red")
+lines(data_2$Sub_metering_3~data_2$Datetime, col = "blue")
+legend("topright", col=c("black","red","blue"), c("Sub_metering_1  ","Sub_metering_2  ", "Sub_metering_3  "), lty=c(1,1))
+
+plot(data_2$Global_reactive_power~data_2$Datetime, type = "l", xlab = "datetime", ylab = "Global Reactive Power" )     
+
